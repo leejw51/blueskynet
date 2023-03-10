@@ -15,15 +15,18 @@ encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)
 
 # Generate a sequence of input tokens with the new embedding dimensionality
 input_tokens = torch.rand(10, 32, embedding_dim)
+# show shape of input_tokens
+print("input_tokens shape=",input_tokens.shape)
 
 # Define a linear layer to project the embeddings to the `d_model` dimensionality
 projection_layer = nn.Linear(embedding_dim, 512)
+print("embedding_dim=",embedding_dim,"  512")
 
 # Pass the input embeddings through the projection layer to convert them to the `d_model` dimensionality
 input_embeddings = projection_layer(input_tokens)
+print("input_embeddings shape=",input_embeddings.shape)
 
 # Pass the projected embeddings through the transformer encoder
 encoder_output = encoder(input_embeddings)
-
-print(encoder_output.shape)
+print("encoder_output shape=",encoder_output.shape)
 
