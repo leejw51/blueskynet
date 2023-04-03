@@ -20,7 +20,13 @@ class TensorDataset(Dataset):
             'input_ids': self.input_ids[idx],
             'attention_mask': self.attention_mask[idx],
         }
-    
+
+def generate_text(prompt, model, tokenizer, max_length=50):
+    input_ids = tokenizer.encode(prompt, return_tensors='pt')
+    output = model.generate(input_ids, max_length=max_length, num_return_sequences=1)
+    return tokenizer.decode(output[0], skip_special_tokens=True)
+
+
 # Load the text data
 data = "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
 
@@ -63,3 +69,12 @@ trainer = Trainer(
 
 # Train the model
 trainer.train()
+
+test_prompt = "The quick brown fox"
+
+# Generate text using the trained model
+generated_text = generate_text(test_prompt, model, tokenizer)
+print(f"Generated text: {generated_text}")
+
+
+
